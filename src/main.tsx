@@ -31,8 +31,6 @@ import { UnoptimizableRenderingStructure } from './idioms/19-unoptomizable-rende
 // objectCopyingWithSpread();
 // objectCopyingWithStructuredClone();
 
-// Ask for AvoidingUseState, and IncorrectDependencies
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // Uncomment the following JSX components to see the solutions in action
   <React.StrictMode>
@@ -53,6 +51,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     {/* <IncorrectDependencies records={[{ id: '1', name: 'Messi' }, { id: '2', name: 'Ronaldo' }]} /> */}
     {/* <UnnecessaryFunctionRedefinitions emails={['as.com', 'messi@gmail.com']} /> */}
     {/* <SerialLoading /> */}
-    <UnoptimizableRenderingStructure altRecords={[{ id: 1, type: 'alt-record' }]} />
+    {/* <UnoptimizableRenderingStructure altRecords={[{ id: 1, type: 'alt-record' }]} /> */}
   </React.StrictMode>
 );
