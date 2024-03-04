@@ -37,37 +37,56 @@ export function UnnecessaryEffectTriggering() {
 
 /* Solution 👇
 
-1) Single line change: let's move the clearInterval to the cleanup function of the first useEffect
-2) Another necessary change to do is to avoid the async keyword in the second useEffect, since it's not supported, we can use a simple .then.catch promise chain
+1) Let's do a single useEffect to fetch the leader and its details afterwards
 */
 
+type Leader = {
+  name: string,
+  country?: string
+}
 
-async function fetchLeader() { return { name: 'Messi' } }
-async function fetchDetails(leader) { return { ...leader, country: 'Argentina' } }
+async function fetchLeader(): Promise<Leader> { return { name: 'Messi' } }
+async function fetchDetails(leader: Leader): Promise<Leader> { return { ...leader, country: 'Argentina' } }
 
 export function UnnecessaryEffectTriggering() {
-  const [leader, setLeader] = useState({})
+  // states
+  const [leader, setLeader] = useState<Leader | null>(null)
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
 
+  // effects
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const leader = await fetchLeader()
-      setLeader(leader)
-    }, 1000)
+    async function fetchLeaderAndDetails() {
+      setStatus('loading')
 
-    return () => {
-      clearInterval(interval)
+      try {
+        const leader = await fetchLeader()
+        const enriched = await fetchDetails(leader)
 
+
+        setStatus('success')
+        setLeader({ ...leader, ...enriched })
+      } catch (error) {
+        setStatus('error')
+      }
     }
+
+    fetchLeaderAndDetails()
   }, [])
 
-  useEffect(function enhanceRecord() {
-    fetchDetails(leader).then((enriched) => setLeader(enriched))
-  }, [leader])
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
+
+  if (status === 'error') {
+    return <div>Try again later</div>
+  }
 
   return (
     <div>
-      <div>Leader:{leader.name}</div>
-      {leader.country && <div>{`From: ${leader.country}`}</div>}
+      {leader ? (<>
+        <div>Leader:{leader.name}</div>
+        {leader.country && <div>{`From: ${leader.country}`}</div>}
+      </>) : null}
     </div>
   )
 }
