@@ -27,7 +27,7 @@ function getCurrentCalendarDays() {
   const [year, month] = [date.getFullYear(), date.getMonth()]
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  return Array.from({ length: daysInMonth }, (_, index) => index + 1);
 }
 
 export function CrudeDeclarations() {

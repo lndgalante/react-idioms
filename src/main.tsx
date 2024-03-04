@@ -40,7 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     {/* <UseEffectDerivedCalculation /> */}
     {/* <DirtyUnmount /> */}
     {/* <AvoidingUseState /> */}
-    {/* <CrudeDeclarations /> */}
+    <CrudeDeclarations />
     {/* <MagicNumbers age={18} /> */}
     {/* <UndiomaticHtmlStructure /> */}
     {/* <FormWithStructuredState /> */}
